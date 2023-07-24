@@ -54,6 +54,36 @@ export const createUserMutation = /* GraphQL */`
 	}
 `;
 
+export const projectsQueryAll = /* GraphQL */`
+  query getProjects($endCursor: String) {
+    projectSearch(first: 8, after: $endCursor) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          title
+          githubUrl
+          description
+          liveSiteUrl
+          id
+          image
+          category
+          createdBy {
+            id
+            email
+            name
+            avatarUrl
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const projectsQuery = /* GraphQL */`
   query getProjects($category: String, $endCursor: String) {
     projectSearch(first: 8, after: $endCursor, filter: {category: {eq: $category}}) {
@@ -84,7 +114,7 @@ export const projectsQuery = /* GraphQL */`
   }
 `;
 
-export const getProjectByIdQuery = `
+export const getProjectByIdQuery = /* GraphQL */`
   query GetProjectById($id: ID!) {
     project(by: { id: $id }) {
       id
